@@ -24,7 +24,11 @@ class PredictItem(BaseModel):
 with open('model.pkl', 'rb') as f:
     model = pickle.load(f)
 
-@app.post('/')
+@app.get('/')
+async def starter():
+    return 'Hello' 
+
+@app.post('/predict')
 async def prediction(item: PredictItem):
     df = pd.DataFrame([item.dict().values()], columns=item.dict().keys())
     yhat = model.predict(df)
